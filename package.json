@@ -7,5 +7,17 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.0.0",
     "dotenv": "^16.3.1"
-  }
+  },
+  "version": "1.0.0",
+  "description": "This project implements a smart contract for managing university degrees as NFTs (Non-Fungible Tokens) on the Ethereum blockchain. Each degree token is represented by an ERC721 token, and the contract includes features such as minting degrees, transferring degrees, and locking/unlocking tokens.",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node test/test.js"
+  },
+  "author": "",
+  "license": "ISC"
 }
