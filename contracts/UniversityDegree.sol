@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 contract UniversityDegree is ERC721, Ownable {
     // Mapping to store whether each token is locked
     mapping(uint256 => bool) private _lockedTokens;
+    uint256[] private _issuedTokens;
 
     // Struct to represent a degree with name and university
     struct Degree {
@@ -42,6 +43,7 @@ contract UniversityDegree is ERC721, Ownable {
 
         // Store the degree information for the token
         _personToDegree[tokenId] = Degree(courseName, universityName, owner, to);
+        _issuedTokens.push(tokenId);
     }
 
     // Override transferFrom to include token locking logic
@@ -86,5 +88,22 @@ contract UniversityDegree is ERC721, Ownable {
         Degree memory degree = _personToDegree[tokenId];
         return (degree.courseName, degree.universityName, degree.deployedFrom, degree.deployedTo);
     }
+    function getIssuedDegreesCount() external view returns (uint256) {
+        return _issuedTokens.length;
+    }
+
+    // Function to get the details of all issued degrees
+    function getIssuedDegrees() external view returns (uint256[] memory, Degree[] memory) {
+        uint256 count = _issuedTokens.length;
+        Degree[] memory degrees = new Degree[](count);
+
+        for (uint256 i = 0; i < count; i++) {
+            uint256 tokenId = _issuedTokens[i];
+            degrees[i] = _personToDegree[tokenId];
+        }
+
+        return (_issuedTokens, degrees);
+    }
 }
+
 

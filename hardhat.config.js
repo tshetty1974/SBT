@@ -1,6 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@openzeppelin/hardhat-upgrades");
-require("hardhat-ignition");
+
 // Ensure your configuration variables are set before executing the script
 const { vars } = require("hardhat/config");
 
@@ -23,5 +23,8 @@ module.exports = {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [SEPOLIA_PRIVATE_KEY],
     },
+  },
+  ignition: {
+    modules: ["./ignition/modules/UniversityDegreeV2.js"],
   },
 };
